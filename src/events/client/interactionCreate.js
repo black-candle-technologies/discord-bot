@@ -1,4 +1,4 @@
-const { InteractionType } = require("discord.js");
+const { InteractionType, ReactionUserManager } = require("discord.js");
 
 module.exports = {
   name: "interactionCreate",
@@ -54,16 +54,29 @@ module.exports = {
         console.error(error);
       }
     } else if (interaction.isContextMenuCommand()) {
-        const { commands } = client;
-        const { commandName } = interaction;
-        const contextCommand = commands.get(commandName);
-        if(!contextCommand) return;
+      const { commands } = client;
+      const { commandName } = interaction;
+      const contextCommand = commands.get(commandName);
+      if (!contextCommand) return;
 
-        try {
-            await contextCommand.execute(interaction, client);
-        } catch (error) {
-            console.error(error);
-        }
+      try {
+        await contextCommand.execute(interaction, client);
+      } catch (error) {
+        console.error(error);
+      }
+    } else if (
+      interaction.type == InteractionType.ApplicationCommandAutocomplete
+    ) {
+      const { commands } = client;
+      const { commandName } = interaction;
+      const command = commands.get(commandName);
+      if (!command) return;
+
+      try {
+        await command.autocomplete(interaction, client);
+      } catch (error) {
+        console.error(error);
+      }
     }
   },
 };

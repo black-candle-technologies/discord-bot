@@ -1,7 +1,10 @@
+const { ActivityType } = require("discord.js");
+
 module.exports = {
   name: "ready",
   once: true,
   async execute(client) {
-    console.log(`Logged in with user ${client.user.tag}`);
+    setInterval(client.pickPresence, 10 * 1000);
+    console.log(`Ready with user: ${client.user.tag}`);
   },
 };
