@@ -3,6 +3,7 @@ const { InteractionType, ReactionUserManager } = require("discord.js");
 module.exports = {
   name: "interactionCreate",
   once: false,
+  type: "client",
   async execute(interaction, client) {
     if (interaction.isChatInputCommand()) {
       const { commands } = client;
@@ -31,7 +32,12 @@ module.exports = {
       } catch (error) {
         console.error(error);
       }
-    } else if (interaction.isSelectMenu()) {
+    } else if (
+      interaction.isStringSelectMenu() ||
+      interaction.isUserSelectMenu() ||
+      interaction.isChannelSelectMenu() ||
+      interaction.isRoleSelectMenu()
+    ) {
       const { selectMenus } = client;
       const { customId } = interaction;
       const menu = selectMenus.get(customId);

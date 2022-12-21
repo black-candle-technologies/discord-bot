@@ -12,7 +12,7 @@ module.exports = (client) => {
         type: ActivityType.Watching,
         text: `over ${client.guilds.cache.size} guilds!`,
         status: "dnd",
-      },
+      }
     ];
 
     const choice = Math.floor(Math.random() * options.length);
